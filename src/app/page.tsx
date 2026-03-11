@@ -13,6 +13,7 @@ export default function Home() {
   const [message, setMessage] = useState("");
 
   // Build the API URL defensively so a base host in NEXT_PUBLIC_API_URL still works.
+  
   const backendBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
   const apiUrl = backendBase.endsWith("/api/process-sales")
     ? backendBase
