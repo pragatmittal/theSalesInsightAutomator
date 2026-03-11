@@ -3,7 +3,8 @@ version: "3.9"
 services:
   backend:
     build:
-      context: ./backend
+      context: .
+      dockerfile: Dockerfile.backend
     environment:
       - BACKEND_API_KEY=${BACKEND_API_KEY}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
@@ -17,7 +18,8 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: .
+      dockerfile: Dockerfile.frontend
     environment:
       - NEXT_PUBLIC_API_URL=http://backend:8000/api/process-sales
       - NEXT_PUBLIC_BACKEND_API_KEY=${BACKEND_API_KEY}
