@@ -15,9 +15,9 @@ export default function Home() {
   const apiUrl =
     process.env.NEXT_PUBLIC_API_URL ??
     "http://localhost:8000/api/process-sales";
-  // For docker-compose and this prototype, we hard-code the same
-  // value as BACKEND_API_KEY in .env to avoid build-time env issues.
-  const apiKey = "your-strong-random-string";
+  const apiKey =
+    process.env.NEXT_PUBLIC_BACKEND_API_KEY ??
+    "your-strong-random-string";
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
