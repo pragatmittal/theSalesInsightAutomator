@@ -97,14 +97,18 @@ def generate_summary_with_gemini(stats: Dict[str, Any]) -> str:
   return response.text or "AI summary could not be generated."
 
 
+smtp_port = int(os.getenv("SMTP_PORT", "587"))
+use_ssl_tls = smtp_port == 465
+
+# Configure mail transport. Default is Gmail over STARTTLS (587).
 mail_config = ConnectionConfig(
     MAIL_USERNAME=os.getenv("SMTP_USERNAME"),
     MAIL_PASSWORD=os.getenv("SMTP_PASSWORD"),
     MAIL_FROM=os.getenv("EMAIL_FROM"),
     MAIL_SERVER=os.getenv("SMTP_SERVER", "smtp.gmail.com"),
-    MAIL_PORT=int(os.getenv("SMTP_PORT", "587")),
-    MAIL_STARTTLS=True,
-    MAIL_SSL_TLS=False,
+    MAIL_PORT=smtp_port,
+    MAIL_STARTTLS=not use_ssl_tls,
+    MAIL_SSL_TLS=use_ssl_tls,
     USE_CREDENTIALS=True,
 )
 
@@ -176,4 +180,3 @@ async def process_sales(
 @app.get("/health", summary="Health check")
 async def health() -> Dict[str, str]:
     return {"status": "ok"}
-
