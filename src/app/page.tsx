@@ -12,9 +12,11 @@ export default function Home() {
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
 
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL ??
-    "http://localhost:8000/api/process-sales";
+  // Build the API URL defensively so a base host in NEXT_PUBLIC_API_URL still works.
+  const backendBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+  const apiUrl = backendBase.endsWith("/api/process-sales")
+    ? backendBase
+    : `${backendBase.replace(/\\/$/, "")}/api/process-sales`;
   const apiKey =
     process.env.NEXT_PUBLIC_BACKEND_API_KEY ??
     "your-strong-random-string";
@@ -125,4 +127,3 @@ export default function Home() {
     </div>
   );
 }
-
